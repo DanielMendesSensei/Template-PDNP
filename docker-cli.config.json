@@ -1,0 +1,100 @@
+{
+  "projectName": "PDNP Template",
+  "dockerCompose": "docker compose",
+  "services": {
+    "postgres": {
+      "port": 5432,
+      "path": null,
+      "description": "PostgreSQL database server",
+      "healthCheck": true,
+      "backupEnabled": true
+    },
+    "redis": {
+      "port": 6379,
+      "path": null,
+      "description": "Redis cache server",
+      "healthCheck": true,
+      "backupEnabled": true
+    },
+    "backend": {
+      "port": 8000,
+      "path": "./backend",
+      "description": "Django application server",
+      "healthCheck": true,
+      "backupEnabled": true
+    },
+    "celery_worker": {
+      "port": null,
+      "path": "./backend",
+      "description": "Celery worker for background tasks",
+      "healthCheck": true,
+      "backupEnabled": false
+    },
+    "celery_beat": {
+      "port": null,
+      "path": "./backend",
+      "description": "Celery beat scheduler",
+      "healthCheck": false,
+      "backupEnabled": false
+    },
+    "flower": {
+      "port": 5555,
+      "path": null,
+      "description": "Flower - Celery monitoring tool",
+      "healthCheck": false,
+      "backupEnabled": false
+    },
+    "frontend": {
+      "port": 3000,
+      "path": "./frontend",
+      "description": "Next.js frontend application",
+      "healthCheck": false,
+      "backupEnabled": false
+    },
+    "nginx": {
+      "port": 80,
+      "path": null,
+      "description": "Nginx reverse proxy and static file server",
+      "healthCheck": true,
+      "backupEnabled": false
+    }
+  },
+  "plugins": [],
+  "cli": {
+    "version": "2.0",
+    "welcomeMessage": "Bem-vindo ao {projectName} Docker CLI v{version}! 🐳",
+    "goodbyeMessage": "Obrigado por usar o {projectName} Docker CLI!"
+  },
+  "backup": {
+    "enabled": true,
+    "directory": "./backups",
+    "retention": 7,
+    "services": {
+      "postgres": {
+        "command": "pg_dump",
+        "filename": "postgres_backup_{timestamp}.sql"
+      },
+      "redis": {
+        "command": "redis-cli BGSAVE",
+        "filename": "redis_dump_{timestamp}.rdb"
+      }
+    }
+  },
+  "monitoring": {
+    "enabled": true,
+    "refreshInterval": 5,
+    "services": ["postgres", "redis", "backend", "celery_worker", "nginx"],
+    "urls": {
+      "backend": "http://localhost:8000/health/",
+      "frontend": "http://localhost:3000",
+      "flower": "http://localhost:5555",
+      "nginx": "http://localhost/health"
+    }
+  },
+  "development": {
+    "hotReload": true,
+    "debugMode": true,
+    "logLevel": "info",
+    "autoMigrate": true
+  }
+}
