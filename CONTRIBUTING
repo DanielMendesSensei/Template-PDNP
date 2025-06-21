@@ -1,0 +1,119 @@
+# Contributing to Fullstack Django + Next.js Template
+
+First off, thank you for considering contributing to this template! 🎉
+
+## 📋 Table of Contents
+
+- [Code of Conduct](#code-of-conduct)
+- [How Can I Contribute?](#how-can-i-contribute)
+- [Development Setup](#development-setup)
+- [Pull Request Process](#pull-request-process)
+- [Style Guidelines](#style-guidelines)
+
+## 📜 Code of Conduct
+
+This project and everyone participating in it is governed by our Code of Conduct. By participating, you are expected to uphold this code.
+
+- Be respectful and inclusive
+- Welcome newcomers and help them get started
+- Focus on what is best for the community
+- Show empathy towards other community members
+
+## 🤝 How Can I Contribute?
+
+### Reporting Bugs
+
+Before creating bug reports, please check existing issues to avoid duplicates. When creating a bug report, include:
+
+- A clear and descriptive title
+- Steps to reproduce the issue
+- Expected behavior vs actual behavior
+- Environment details (OS, Docker version, etc.)
+- Screenshots if applicable
+
+### Suggesting Enhancements
+
+Enhancement suggestions are tracked as GitHub issues. When suggesting an enhancement:
+
+- Use a clear and descriptive title
+- Provide a detailed description of the proposed feature
+- Explain why this enhancement would be useful
+- List any alternatives you've considered
+
+### Code Contributions
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Run tests and ensure they pass
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to your branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
+
+## 🛠️ Development Setup
+
+1. Fork and clone the repository
+2. Copy `.env.example` to `.env`
+3. Run `make install` to set up the development environment
+4. Make your changes
+5. Run `make test` to ensure everything works
+6. Run `make lint` and `make format` to ensure code quality
+
+## 🔄 Pull Request Process
+
+1. **Update Documentation**: Update the README.md with details of changes if needed
+2. **Add Tests**: Add tests for new functionality
+3. **Follow Style Guide**: Ensure your code follows the project's style guidelines
+4. **Update CHANGELOG**: Add a note about your changes to CHANGELOG.md
+5. **Clean Commits**: Squash commits if necessary for a clean history
+6. **Request Review**: Request review from maintainers
+
+### PR Title Format
+```
+<type>: <subject>
+
+Types: feat, fix, docs, style, refactor, test, chore
+Example: feat: add user authentication endpoint
+```
+
+## 🎨 Style Guidelines
+
+### Python (Backend)
+- Follow PEP 8
+- Use Black for formatting
+- Use isort for import sorting
+- Write docstrings for all functions and classes
+- Type hints are encouraged
+
+### JavaScript/TypeScript (Frontend)
+- Use Prettier for formatting
+- Follow ESLint rules
+- Use TypeScript for type safety
+- Write JSDoc comments for complex functions
+- Prefer functional components with hooks
+
+### Docker
+- Keep images small
+- Use multi-stage builds
+- Don't run as root
+- Use specific versions, not `latest`
+
+### Git Commit Messages
+- Use present tense ("Add feature" not "Added feature")
+- Use Semantic Commits
+- Use imperative mood ("Move cursor to..." not "Moves cursor to...")
+- Limit first line to 72 characters
+- Reference issues and pull requests
+
+## 🏆 Recognition
+
+Contributors will be recognized in:
+- The project README
+- Release notes
+- Special thanks section
+
+## ❓ Questions?
+
+Feel free to open an issue with the tag `question` or reach out to the maintainers.
+
+Thank you for contributing! 🙏

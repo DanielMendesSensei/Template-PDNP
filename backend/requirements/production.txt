@@ -1,0 +1,15 @@
+# Include base requirements
+-r base.txt
+
+# Production server
+gunicorn==21.2.0
+gevent==23.9.1
+
+# Monitoring
+sentry-sdk==1.39.1
+
+# Security
+django-ratelimit==4.1.0
+
+# Performance
+django-cachalot==2.6.1

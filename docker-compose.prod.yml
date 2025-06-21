@@ -1,0 +1,68 @@
+# Production environment overrides
+
+version: '3.8'
+
+services:
+  backend:
+    build:
+      target: production
+    environment:
+      - DEBUG=False
+      - DJANGO_ENVIRONMENT=production
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 4
+    volumes:
+      # Remove source code volume in production
+      - static_data:/app/staticfiles
+      - media_data:/app/media
+      - logs_data:/app/logs
+    restart: always
+
+  frontend:
+    build:
+      target: production
+    environment:
+      - NODE_ENV=production
+    volumes:
+      # Remove source code volume in production
+      - /app/node_modules
+      - /app/.next
+    restart: always
+
+  celery_worker:
+    build:
+      target: production
+    environment:
+      - DEBUG=False
+    volumes:
+      # Remove source code volume in production
+      - media_data:/app/media
+      - logs_data:/app/logs
+    restart: always
+
+  celery_beat:
+    build:
+      target: production
+    environment:
+      - DEBUG=False
+    volumes:
+      # Remove source code volume in production
+      - logs_data:/app/logs
+    restart: always
+
+  # Remove flower in production (or add authentication)
+  flower:
+    profiles:
+      - monitoring
+
+  # Remove pgadmin in production
+  pgadmin:
+    profiles:
+      - tools
+
+  # Add proper logging
+  nginx:
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"

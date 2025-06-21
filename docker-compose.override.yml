@@ -1,0 +1,52 @@
+# Development environment overrides
+
+version: '3.8'
+
+services:
+  backend:
+    volumes:
+      # Hot reload for development
+      - ./backend:/app
+    environment:
+      - DEBUG=True
+      - DJANGO_ENVIRONMENT=development
+    command: python manage.py runserver 0.0.0.0:8000
+
+  frontend:
+    volumes:
+      # Hot reload for Next.js
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+
+  celery_worker:
+    volumes:
+      - ./backend:/app
+    environment:
+      - DEBUG=True
+    # Watchdog for automatic reload
+    command: watchmedo auto-restart --directory=./ --pattern=*.py --recursive -- celery -A config worker --loglevel=info --concurrency=2
+
+  # Add PostgreSQL admin for development
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: ${PROJECT_PREFIX}_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    depends_on:
+      - postgres
+    networks:
+      - app_network
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  pgadmin_data:
+    driver: local

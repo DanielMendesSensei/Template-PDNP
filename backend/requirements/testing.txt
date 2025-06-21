@@ -1,0 +1,5 @@
+-r development.txt
+
+# Additional testing tools
+coverage==7.3.0
+pytest-benchmark==4.0.0
