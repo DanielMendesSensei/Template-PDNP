@@ -1,33 +1,33 @@
 # Core Django
-Django==4.2.8
-djangorestframework==3.14.0
-django-cors-headers==4.3.1
+Django==5.1.4
+djangorestframework==3.15.2
+django-cors-headers==4.6.0
 django-environ==0.11.2
-python-dotenv==1.0.0
+python-dotenv==1.0.1
 
 # Database
-psycopg2-binary==2.9.9
-dj-database-url==2.1.0
+psycopg2-binary==2.9.10
+dj-database-url==2.3.0
 
 # Redis & Caching
-redis==5.0.1
+redis==5.2.1
 django-redis==5.4.0
 
 # Celery
-celery==5.3.4
-django-celery-beat==2.5.0
+celery==5.4.0
+django-celery-beat==2.8.1
 flower==2.0.1
 
 # Authentication
-djangorestframework-simplejwt==5.3.1
+djangorestframework-simplejwt==5.5.1
 
 # API Documentation
-drf-spectacular==0.27.0
+drf-spectacular==0.28.0
 
 # Static files
-whitenoise==6.6.0
+whitenoise==6.8.2
 
 # Utils
-Pillow==10.1.0
-python-dateutil==2.8.2
-pytz==2023.3
+Pillow==11.0.0
+python-dateutil==2.9.0
+pytz==2024.2
