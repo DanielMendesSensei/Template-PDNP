@@ -1,30 +1,42 @@
-# Fullstack Template - Django + Next.js
+# PDNP - Fullstack Template v2.0
 
-A modern fullstack application template with Django REST Framework backend and Next.js frontend, fully containerized with Docker.
+> **P**ython | **D**jango | **N**ext.js | **P**ostgreSQL
+
+A modern, secure, and production-ready fullstack application template with Django REST Framework backend and Next.js frontend, fully containerized with Docker.
+
+[![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python&logoColor=white)](https://www.python.org/)
+[![Django](https://img.shields.io/badge/Django-5.1.4-green?logo=django&logoColor=white)](https://www.djangoproject.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.5.7-black?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.0.1-blue?logo=react&logoColor=white)](https://react.dev/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-blue?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## 🚀 Features
 
 ### Backend (Django)
-- **Django 4.2+** with Django REST Framework
-- **PostgreSQL** database
-- **Redis** for caching and Celery broker
-- **Celery** for async tasks and scheduled jobs
-- **JWT Authentication** with Simple JWT
+- **Python 3.13** with **Django 5.1.4** and Django REST Framework
+- **PostgreSQL 15** database
+- **Redis 7** for caching and Celery broker
+- **Celery 5.4** for async tasks and scheduled jobs
+- **JWT Authentication** with Simple JWT 5.5.1
 - **CORS** configured for frontend integration
-- **API Documentation** with Swagger/ReDoc
-- **Code Quality** tools (Black, Flake8, isort)
+- **API Documentation** with Swagger/ReDoc (drf-spectacular)
+- **Code Quality** tools (Black, Flake8, isort, mypy)
 - **Testing** with pytest and coverage
 
 ### Frontend (Next.js)
-- **Next.js 14+** with App Router
-- **TypeScript** for type safety
-- **Tailwind CSS** for styling
-- **API Integration** with Axios
+- **Next.js 15.5.7** with App Router
+- **React 19.0.1** with latest features
+- **TypeScript 5.7** for type safety
+- **Tailwind CSS 3.4** for styling
+- **Shadcn/ui** components
+- **API Integration** configured
 - **Authentication** flow with JWT
 - **ESLint** and **Prettier** configured
 
 ### DevOps
 - **Docker** and **Docker Compose** for containerization
+- **Multi-stage builds** for optimized images
 - **Nginx** as reverse proxy
 - **Flower** for Celery monitoring
 - **PgAdmin** for database management (dev)
@@ -33,7 +45,7 @@ A modern fullstack application template with Django REST Framework backend and N
 
 ## 📋 Requirements
 
-- Docker and Docker Compose
+- Docker 24+ and Docker Compose v2
 - Make (optional, for using Makefile commands)
 - Git
 
@@ -91,6 +103,7 @@ A modern fullstack application template with Django REST Framework backend and N
 ├── docker-compose.override.yml  # Dev overrides
 ├── docker-compose.prod.yml      # Prod overrides
 ├── Makefile             # Make commands
+├── CHANGELOG.md         # Version history
 └── .env.example         # Environment template
 ```
 
@@ -282,11 +295,27 @@ What this means for you:
 ✅ You can use this template for personal or commercial projects
 ✅ You can modify and distribute as you wish
 ✅ You can incorporate it into proprietary software
-✅ You just need to include the original copyright notice
+You just need to include the original copyright notice
+
+## ⚙️ Tech Stack
+
+| Layer | Technology | Version |
+|-------|------------|--------|
+| Backend Runtime | Python | 3.13 |
+| Backend Framework | Django | 5.1.4 |
+| API Framework | Django REST Framework | 3.15.2 |
+| Frontend Runtime | Node.js | 18 LTS |
+| Frontend Framework | Next.js | 15.5.7 |
+| UI Library | React | 19.0.1 |
+| Database | PostgreSQL | 15 |
+| Cache/Broker | Redis | 7 |
+| Task Queue | Celery | 5.4.0 |
+| Reverse Proxy | Nginx | Latest |
 
 ## 🙏 Acknowledgments
 
-- Django documentation
-- Next.js documentation
-- Docker documentation
-- Community contributors
+- [Django](https://www.djangoproject.com/) - The web framework for perfectionists with deadlines
+- [Next.js](https://nextjs.org/) - The React framework for production
+- [Docker](https://www.docker.com/) - Containerization platform
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Shadcn/ui](https://ui.shadcn.com/) - Beautiful UI components
