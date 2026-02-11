@@ -1,0 +1,33 @@
+services:
+  clamav:
+    image: clamav/clamav:1.4.3_base
+    platform: linux/amd64
+    hostname: "clamav"
+    environment:
+      CLAMAV_NO_FRESHCLAMD: "false"
+    ports:
+      - "127.0.0.1:3310:3310"
+    volumes:
+      - clamav-data:/var/lib/clamav
+    healthcheck:
+      test: ["CMD", "clamdcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  clamav-api:
+    build:
+      context: ..
+      dockerfile: microservice/Dockerfile
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      CLAMAV_ADDRESS: "http://clamav:3310"
+      CLAMAV_TIMEOUT: "60"
+      CLAMAV_BACKEND: "clamd"
+    depends_on:
+      clamav:
+        condition: service_healthy
+
+volumes:
+  clamav-data:

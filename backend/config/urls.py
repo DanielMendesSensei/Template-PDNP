@@ -9,6 +9,7 @@ api_urlpatterns = [
     path('core/', include('apps.core.urls')),
     path('downloads/', include('apps.downloads.urls')),
     path('users/', include('apps.users.urls')),
+    path('clamav/', include('apps.django_clamav.urls')),
 ]
 
 urlpatterns = [
