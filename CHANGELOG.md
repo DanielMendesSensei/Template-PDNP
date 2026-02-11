@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-02-11
+
+### Added
+- **ClamAV Integration**: Full virus scanning and file validation via `django-clamav` reusable app
+  - REST API endpoints for file scanning (`/api/clamav/scan/`), health check (`/api/clamav/health/`), and daemon info (`/api/clamav/info/`)
+  - Django form mixin (`AntivirusFormMixin`) for automatic file validation
+  - Django model field validator (`validate_file`) for file uploads
+  - Direct Python scanner API for programmatic virus scanning
+  - Optional middleware for scanning all uploaded files automatically
+  - Support for TCP (host) and Unix socket connection modes
+  - Self-contained with zero additional dependencies
+- ClamAV Docker service (`clamav/clamav:latest`) with persistent virus definitions volume
+- ClamAV environment variables in `.env.example`
+- ClamAV section in README with usage examples and configuration guide
+
+### Changed
+- Backend service now depends on ClamAV health check before starting
+- Updated `docker-compose.yml` with ClamAV service and `clamav_data` volume
+
+---
+
 ## [2.0.0] - 2025-12-09
 
 ### Added
@@ -62,5 +83,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+[2.1.0]: https://github.com/DanielMendesSensei/Template-PDNP/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/DanielMendesSensei/Template-PDNP/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/DanielMendesSensei/Template-PDNP/releases/tag/v1.0.0

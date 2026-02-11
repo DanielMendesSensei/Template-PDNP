@@ -19,6 +19,7 @@ A modern, secure, and production-ready fullstack application template with Djang
 - **Redis 7** for caching and Celery broker
 - **Celery 5.4** for async tasks and scheduled jobs
 - **JWT Authentication** with Simple JWT 5.5.1
+- **ClamAV Integration** for file scanning and virus detection
 - **CORS** configured for frontend integration
 - **API Documentation** with Swagger/ReDoc (drf-spectacular)
 - **Code Quality** tools (Black, Flake8, isort, mypy)
@@ -75,6 +76,7 @@ A modern, secure, and production-ready fullstack application template with Djang
    - Backend API: http://localhost:8000
    - Django Admin: http://localhost:8000/admin
    - API Documentation: http://localhost:8000/api/docs
+   - ClamAV API: http://localhost:8000/api/clamav/
    - Flower (Celery): http://localhost:5555
    - PgAdmin: http://localhost:5050
 
@@ -242,7 +244,98 @@ docker-compose exec frontend npm install package-name
 docker-compose exec frontend npm install -D package-name
 ```
 
-## 🚀 Deployment
+## �️ ClamAV Integration
+
+This template includes **django-clamav**, a comprehensive ClamAV integration for file scanning and virus detection.
+
+### Features
+
+- Automatic file scanning for uploaded files
+- REST API endpoints for manual scanning
+- Django form validators and mixins
+- Support for TCP and Unix socket connections
+- Self-contained with zero required dependencies
+
+### API Endpoints
+
+```bash
+# Health check
+GET http://localhost:8000/api/clamav/health/
+
+# ClamAV info (version, signatures)
+GET http://localhost:8000/api/clamav/info/
+
+# Scan file
+POST http://localhost:8000/api/clamav/scan/
+Content-Type: multipart/form-data
+file: [your-file]
+```
+
+### Usage in Django
+
+#### Form Validation
+```python
+from apps.django_clamav.forms import AntivirusFormMixin
+
+class MyUploadForm(AntivirusFormMixin, forms.Form):
+    file = forms.FileField()
+```
+
+#### Model Field Validation
+```python
+from apps.django_clamav.validators import validate_file
+
+class MyModel(models.Model):
+    file = models.FileField(validators=[validate_file])
+```
+
+#### Direct Scanning
+```python
+from apps.django_clamav.scanner import get_scanner
+
+scanner = get_scanner()
+result = scanner.scan("/path/to/file.pdf")
+
+if result.passed:
+    print("File is clean")
+elif result.passed is False:
+    print(f"Virus found: {result.details}")
+else:
+    print(f"Scanning error: {result.details}")
+```
+
+### Configuration
+
+ClamAV settings in `.env`:
+
+- `DJANGO_CLAMAV_ENABLED`: Enable/disable scanning (default: True)
+- `DJANGO_CLAMAV_CONNECTION_MODE`: 'host' for TCP or 'socket' for Unix socket
+- `DJANGO_CLAMAV_URL`: ClamAV daemon URL (default: http://clamav:3310)
+- `DJANGO_CLAMAV_TIMEOUT`: Connection timeout in seconds (default: 60.0)
+- `DJANGO_CLAMAV_FAIL_LOUDLY`: Raise errors on scan failure (default: False)
+
+### Docker Service
+
+The ClamAV service:
+- Downloads virus definitions on first start (~300MB)
+- Takes 1-2 minutes to initialize
+- Updates definitions automatically via freshclam
+- Uses persistent volume for virus database
+
+### Middleware (Optional)
+
+To scan all uploaded files automatically, add to `MIDDLEWARE` in settings:
+
+```python
+MIDDLEWARE = [
+    ...
+    'apps.django_clamav.middleware.AntivirusMiddleware',
+]
+```
+
+**Note:** ClamAV initialization takes a few minutes on first run. The backend will wait for ClamAV to be healthy before starting.
+
+## �🚀 Deployment
 
 ### Production Checklist
 

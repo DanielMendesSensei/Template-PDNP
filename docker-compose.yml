@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # ===== DATABASE =====
@@ -45,9 +45,29 @@ services:
     networks:
       - app_network
 
+  # ===== CLAMAV =====
+  clamav:
+    image: clamav/clamav:latest
+    container_name: ${PROJECT_PREFIX}_clamav
+    ports:
+      - "${CLAMAV_PORT:-3310}:3310"
+    volumes:
+      - clamav_data:/var/lib/clamav
+    environment:
+      - CLAMAV_NO_FRESHCLAMD=false
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/clamdcheck.sh"]
+      interval: 60s
+      timeout: 30s
+      retries: 3
+      start_period: 300s
+    restart: unless-stopped
+    networks:
+      - app_network
+
   # ===== BACKEND API =====
   backend:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
       target: ${BUILD_TARGET:-development}
@@ -75,6 +95,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      clamav:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
       interval: 30s
@@ -87,7 +109,7 @@ services:
 
   # ===== CELERY WORKER =====
   celery_worker:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
       target: ${BUILD_TARGET:-development}
@@ -121,7 +143,7 @@ services:
 
   # ===== CELERY BEAT =====
   celery_beat:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
       target: ${BUILD_TARGET:-development}
@@ -148,7 +170,7 @@ services:
 
   # ===== FLOWER (Celery Monitoring) =====
   flower:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
       target: development
@@ -219,6 +241,8 @@ volumes:
   postgres_data:
     driver: local
   redis_data:
+    driver: local
+  clamav_data:
     driver: local
   static_data:
     driver: local

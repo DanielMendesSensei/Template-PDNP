@@ -37,6 +37,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'apps.core',
     'apps.users',
+    'apps.django_clamav',
     # Add your apps here
 ]
 
@@ -117,6 +118,13 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_TASK_SOFT_TIME_LIMIT = int(os.getenv('CELERY_TASK_SOFT_TIME_LIMIT', '300'))
 CELERY_TASK_TIME_LIMIT = int(os.getenv('CELERY_TASK_TIME_LIMIT', '600'))
 CELERY_WORKER_PREFETCH_MULTIPLIER = int(os.getenv('CELERY_WORKER_PREFETCH_MULTIPLIER', '1'))
+
+# ClamAV Configuration
+DJANGO_CLAMAV_ENABLED = os.getenv('DJANGO_CLAMAV_ENABLED', 'True') == 'True'
+DJANGO_CLAMAV_CONNECTION_MODE = os.getenv('DJANGO_CLAMAV_CONNECTION_MODE', 'host')
+DJANGO_CLAMAV_URL = os.getenv('DJANGO_CLAMAV_URL', 'http://clamav:3310')
+DJANGO_CLAMAV_TIMEOUT = float(os.getenv('DJANGO_CLAMAV_TIMEOUT', '60.0'))
+DJANGO_CLAMAV_FAIL_LOUDLY = os.getenv('DJANGO_CLAMAV_FAIL_LOUDLY', 'False') == 'True'
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
